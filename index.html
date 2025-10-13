@@ -132,11 +132,12 @@
     .gate-footnote{ margin:.8rem 0 0; font-size:.85rem; color:#93a4bd; display:flex; align-items:center; gap:.4rem }
     .dot{ width:6px; height:6px; border-radius:50%; background:#22c55e; display:inline-block }
 
-    /* ===== Native banner di popup ===== */
+    /* Ad slot di popup: scale 728×90 agar muat HP */
     #ad-slot-wrap{ width:100%; overflow:hidden; border-top:1px dashed var(--line-dark); margin-top:8px; padding-top:8px; }
-    .native-wrap{ width:100%; display:flex; justify-content:center; }
-    /* pastikan kontainer iklan tidak bikin overflow di mobile */
-    #container-44bbe63ca8c450f10d1da638756b975b{ width:100%; max-width:100%; overflow:hidden; }
+    #ad-slot{ width:728px; transform-origin:top left }
+    @media (max-width:760px){
+      #ad-slot{ transform:scale(calc((100vw - 72px)/728)); } /* 72px ≈ padding & border kartu */
+    }
 
     /* ===== MOBILE FIX PACK (override bandel) ===== */
     html, body { width:100% !important; max-width:100% !important; }
@@ -162,105 +163,18 @@
   </header>
 
   <div class="banner">Advertise</div>
-
-  <!-- ===== POPUP GATE ===== -->
-  <div id="gate-overlay" style="display:none"></div>
-  <div id="gate-modal" role="dialog" aria-modal="true" aria-labelledby="gate-title" style="display:none">
-    <div class="gate-card">
-      <button id="gate-close" aria-label="Tutup" class="gate-close">✕</button>
-
-      <!-- STEP 1 -->
-      <section id="gate-step1" aria-labelledby="gate-title">
-        <div class="gate-header">
-          <div class="gate-badge">18+</div>
-          <h3 id="gate-title">Konfirmasi Akses.</h3>
-          <p class="gate-sub">Halaman ini memuat <strong>Konten Dewasa</strong>. Silakan konfirmasi untuk melanjutkan.</p>
-        </div>
-
-        <label class="gate-check">
-          <input type="checkbox" id="gate-consent" />
-          <span>Saya berusia 18+ dan setuju untuk melanjutkan.</span>
-        </label>
-
-        <div class="gate-actions">
-          <button id="gate-continue" class="gate-btn" disabled>LANJUTKAN</button>
-          <button id="gate-nope" class="gate-btn ghost" type="button">Batal</button>
-        </div>
-
-        <div class="gate-footnote">
-          <span class="dot"></span> Halaman ini berisi konten dewasa. Anda di haruskan berusia 18+
-        </div>
-      </section>
-
-      <!-- STEP 2 -->
-      <section id="gate-step2" hidden aria-live="polite">
-        <div class="gate-header">
-          <div class="gate-icon">🎁</div>
-          <h3>Penawaran Sponsor</h3>
-          <p class="gate-sub">Klik banner di bawah untuk melanjutkan menonton video.</p>
-        </div>
-
-        <div id="ad-slot-wrap">
-          <div class="native-wrap">
-            <!-- === NATIVE BANNER (kode dari kamu) === -->
-            <script async data-cfasync="false" src="//enlargementemergencyflank.com/44bbe63ca8c450f10d1da638756b975b/invoke.js"></script>
-            <div id="container-44bbe63ca8c450f10d1da638756b975b"></div>
-          </div>
-        </div>
-
-        <p class="gate-hint">Banner belum muncul? Tunggu beberapa detik atau muat ulang halaman.</p>
-      </section>
-    </div>
-  </div>
-
-  <!-- ===== LOGIC POPUP ===== -->
-  <script>
-  (function(){
-    const COOLDOWN_HOURS = 0;  // tampil 1x per 24 jam
-    const SHOW_DELAY_MS  = 2000; // delay muncul
-    const KEY = "gate_last_shown_at_v2";
-
-    const overlay = document.getElementById('gate-overlay');
-    const modal   = document.getElementById('gate-modal');
-    const closeBtn= document.getElementById('gate-close');
-
-    const step1   = document.getElementById('gate-step1');
-    const step2   = document.getElementById('gate-step2');
-
-    const consent = document.getElementById('gate-consent');
-    const btnGo   = document.getElementById('gate-continue');
-    const btnNo   = document.getElementById('gate-nope');
-
-    function lastShownWithin(hours){
-      try{
-        const t = parseInt(localStorage.getItem(KEY), 10);
-        return t && (Date.now() - t) < hours*3600*1000;
-      }catch(e){ return false; }
-    }
-    function openModal(){ overlay.style.display='block'; modal.style.display='flex'; }
-    function closeModal(){ overlay.style.display='none'; modal.style.display='none'; }
-
-    consent.addEventListener('change', ()=> { btnGo.disabled = !consent.checked; });
-    btnNo.addEventListener('click', closeModal);
-    closeBtn.addEventListener('click', closeModal);
-    overlay.addEventListener('click', closeModal);
-    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
-
-    btnGo.addEventListener('click', function(){
-      // TIDAK ada lagi injeksi script iklan via JS.
-      step1.hidden = true;
-      step2.hidden = false;
-      try{ localStorage.setItem(KEY, String(Date.now())); }catch(e){}
-    });
-
-    window.addEventListener('load', function(){
-      if(!lastShownWithin(COOLDOWN_HOURS)){
-        setTimeout(openModal, SHOW_DELAY_MS);
-      }
-    });
-  })();
-  </script>
-
+	<div style = "clear: both; text-align: center; margin: 5px;">
+	<script type="text/javascript">
+	atOptions = {
+		'key' : 'befa84d0d352cc2f2a941daf7c679101',
+		'format' : 'iframe',
+		'height' : 90,
+		'width' : 728,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/befa84d0d352cc2f2a941daf7c679101/invoke.js"></script>
+		</div>
   <!-- ===== MAIN CONTENT ===== -->
   <main class="wrap">
     <section class="player-shell">
@@ -269,13 +183,13 @@
           <source src="https://cdn.jsdelivr.net/gh/peugeg/video-cdn@main/assetmy/video_2025-10-11_17-30-09.mp4" type="video/mp4" />
           Browser kamu tidak mendukung pemutar video HTML5.
         </video>
-        <script type="text/javascript">   
+	<script type="text/javascript">   
     function Redirect() 
     {  
-        window.location="https://www.effectivegatecpm.com/mx3t8ecf16?key=5e22ba0978c6aeec1ad252a87879d398"; 
+        window.location="https://www.effectivegatecpm.com/g1pbrwtv1y?key=bcbea524bcd050530d154e41ebb1f94c"; 
     } 
     document.write("You will be redirected to a new page in 5 seconds"); 
-    setTimeout('Redirect()', 20000);   
+    setTimeout('Redirect()', 15000);   
 </script>
       </div>
 
@@ -307,7 +221,7 @@
   </script>
   <noscript><a href="/" target="_blank"><img src="//sstatic1.histats.com/0.gif?4856512&101" alt="" border="0"></a></noscript>
 
-  <!-- Script iklan pihak ketiga lain (jika ada) bisa diletakkan di sini -->
-  <script type='text/javascript' src='//enlargementemergencyflank.com/1d/26/8d/1d268d0e19419eae7002328a45656f50.js'></script>
+  <!-- ===== Pindahkan script iklan pihak ketiga dari <head> ke sini ===== -->
+  <script type='text/javascript' src='//pl27844187.effectivegatecpm.com/a3/f1/46/a3f146bf2f056de84f4c0f18284b1ad1.js'></script>
 </body>
 </html>
